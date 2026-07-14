@@ -20,7 +20,7 @@ jobs:
 
       - name: Compile to material.bin
         run: |
-          # Perintah resmi MaterialBinTool untuk meng-compile langsung dari config.json
+          # Perintah resmi MaterialBinTool untuk meng-compile langsung dari config.json di luar folder
           java -jar MaterialBinTool.jar -c config.json
 
       - name: Upload Result
