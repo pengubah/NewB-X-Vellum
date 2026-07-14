@@ -1,0 +1,31 @@
+name: Compile Shader
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Download MaterialBinTool
+        run: |
+          wget https://github.com -O MaterialBinTool.jar
+
+      - name: Compile to material.bin
+        run: |
+          # Perintah untuk compile 4 file kamu menjadi material.bin
+          java -jar MaterialBinTool.jar compile -c shader_src/config.json -v shader_src/varying.def.sc -f shader_src/fragment.sc -i shader_src/vertex.sc -o output/
+        continue-on-error: true
+
+      - name: Upload Result
+        uses: actions/upload-artifact@v4
+        with:
+          name: shader-material-bin
+          path: output/
